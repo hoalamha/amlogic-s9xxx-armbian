@@ -286,8 +286,8 @@ jobs:
         run: |
           # Compile method and parameter description: https://docs.armbian.com/Developer-Guide_Build-Options
           cd build/
-              ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=odroidn2 BRANCH=current BUILD_MINIMAL=no \
-                           BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT="gnome" EXPERT=yes KERNEL_CONFIGURE=no \
+              ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=s905w_s905x_s905mb_s905l3a_s905l3b_s905x2_s905x3_s912_s922x_s922x-ct2000_s922x-reva BRANCH=current BUILD_MINIMAL=yes \
+                           BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=yes EXPERT=no KERNEL_CONFIGURE=no \
                            COMPRESS_OUTPUTIMAGE="sha" SHARE_LOG=yes
           echo "status=success" >> ${GITHUB_OUTPUT}
 
