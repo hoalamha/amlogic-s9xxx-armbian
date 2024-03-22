@@ -137,7 +137,7 @@ runs:
 
             echo -e "Check the armbian file name (-trunk_)..."
             image_file="$(ls *.img 2>/dev/null | head -n 1)"
-            if [[ "${image_file}" =~ "-trunk_" ]]; then
+            if [[ "${image_file}" =~ "_current_" ]]; then
                 echo -e "The armbian file name is correct."
             else
                 echo -e "Modify Armbian filename..."
