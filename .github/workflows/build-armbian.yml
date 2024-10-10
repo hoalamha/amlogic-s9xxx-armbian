@@ -304,7 +304,8 @@ jobs:
           cd build/
               ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=odroidn2 BRANCH=current BUILD_MINIMAL=no \
                            BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=yes EXPERT=yes KERNEL_CONFIGURE=no \
-                           COMPRESS_OUTPUTIMAGE="sha" SHARE_LOG=yes DESKTOP_ENVIRONMENT="xfce" DESKTOP_ENVIRONMENT_CONFIG_NAME="config_base"
+                           COMPRESS_OUTPUTIMAGE="sha" SHARE_LOG=yes DESKTOP_ENVIRONMENT="xfce" \
+                           DESKTOP_ENVIRONMENT_CONFIG_NAME="config_base" DESKTOP_APPGROUPS_SELECTED=""
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Organize files and clear space
