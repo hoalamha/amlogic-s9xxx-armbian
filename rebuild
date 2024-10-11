@@ -646,12 +646,15 @@ make_image() {
 
     IMG_SIZE="$((skip_mb + boot_mb + root_mb))"
     truncate -s ${IMG_SIZE}M ${build_image_file}
-
+    process_msg "truncate -s ${IMG_SIZE}M ${build_image_file}"
     parted -s ${build_image_file} mklabel ${partition_table_type}
+    process_msg "parted -s ${build_image_file} mklabel ${partition_table_type}"
     parted -s ${build_image_file} mkpart primary ${bootfs_type} $((skip_mb))MiB $((skip_mb + boot_mb - 1))MiB
+    process_msg "parted -s ${build_image_file} mkpart primary ${bootfs_type} $((skip_mb))MiB $((skip_mb + boot_mb - 1))MiB"
     parted -s ${build_image_file} mkpart primary ${rootfs_type} $((skip_mb + boot_mb))MiB 100%
-
+    process_msg "parted -s ${build_image_file} mkpart primary ${rootfs_type} $((skip_mb + boot_mb))MiB 100%"
     loop_new="$(losetup -P -f --show "${build_image_file}")"
+    process_msg "loop_new="$(losetup -P -f --show "${build_image_file}")""
     [[ -n "${loop_new}" ]] || error_msg "losetup ${build_image_file} failed."
 
     # Confirm BOOT_UUID
@@ -682,11 +685,15 @@ make_image() {
         bootloader_path="${uboot_path}/${PLATFORM}/bootloader"
         if [[ -n "${MAINLINE_UBOOT}" && -f "${bootloader_path}/${MAINLINE_UBOOT}" ]]; then
             dd if="${bootloader_path}/${MAINLINE_UBOOT}" of="${loop_new}" conv=fsync bs=1 count=444
+            process_msg "dd if="${bootloader_path}/${MAINLINE_UBOOT}" of="${loop_new}" conv=fsync bs=1 count=444"
             dd if="${bootloader_path}/${MAINLINE_UBOOT}" of="${loop_new}" conv=fsync bs=512 skip=1 seek=1
+            process_msg "dd if="${bootloader_path}/${MAINLINE_UBOOT}" of="${loop_new}" conv=fsync bs=512 skip=1 seek=1"
             #echo -e "${INFO} 01. For [ ${board} ] write bootloader: ${MAINLINE_UBOOT}"
         elif [[ -n "${BOOTLOADER_IMG}" && -f "${bootloader_path}/${BOOTLOADER_IMG}" ]]; then
             dd if="${bootloader_path}/${BOOTLOADER_IMG}" of="${loop_new}" conv=fsync bs=1 count=444
+            process_msg "dd if="${bootloader_path}/${BOOTLOADER_IMG}" of="${loop_new}" conv=fsync bs=1 count=444"
             dd if="${bootloader_path}/${BOOTLOADER_IMG}" of="${loop_new}" conv=fsync bs=512 skip=1 seek=1
+            process_msg "dd if="${bootloader_path}/${BOOTLOADER_IMG}" of="${loop_new}" conv=fsync bs=512 skip=1 seek=1"
             #echo -e "${INFO} 02. For [ ${board} ] write bootloader: ${BOOTLOADER_IMG}"
         fi
     }
